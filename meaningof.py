@@ -14,7 +14,7 @@ api_url = str("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + arg)
 req = requests.get(api_url)
 dct = req.json()
 
-if dct["title"] == "No Definitions Found":
+if "title" in dct:
     print(dct["title"] + ":\n\t",dct["message"])
 
 else:
