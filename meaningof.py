@@ -1,18 +1,23 @@
 #!/usr/bin/python3
 
 import requests
-import json
 import sys
 
+count = 0
 n = len(sys.argv)
 
 for i in range(1, n):
-    word = sys.argv[i]
+    arg = sys.argv[i]
 
-api_url = str("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + word)
-
+api_url = str("https://api.dictionaryapi.dev/api/v2/entries/en_US/" + arg)
+        
 req = requests.get(api_url)
+dct = req.json()
 
-df = req.json()
-print(df[0]["word"])
+if dct["title"] == "No Definitions Found":
+    print(dct["title"] + ":\n\t",dct["message"])
 
+else:
+    word = dct[0]["word"]
+    definition = dct[0]["meanings"][0]["definitions"][0]["definition"]
+    print(word + ":\n\tdefination:", definition) 
